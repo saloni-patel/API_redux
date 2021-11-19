@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Button, Container, Row } from "react-bootstrap";
-import { registerUsers, loginUser } from "../actions";
+import { registerUsers } from "../actions";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Register = (props) => {
   const [data, setData] = useState({ email: "", password: "" });
-  const [login, setLogin] = useState({ email: "", password: "" });
+  // const [login, setLogin] = useState({ email: "", password: "" });
 
   // console.log("REG..", props.regUser);
   // console.log("LOGIN...", props.loginUserss);
@@ -13,14 +14,14 @@ const Register = (props) => {
 
   const regToken = props.regUser;
   console.log(regToken,"fffff");
-  const loginToken = props.loginUserss.token;
+  // const loginToken = props.loginUserss.token;
   // const regError = props.unRegi.error;
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    props.loginUser({ login });
-    setLogin({ email: "", password: "" });
-  };
+  // const handleLogin = (e) => {
+  //   e.preventDefault();
+  //   props.loginUser({ login });
+  //   setLogin({ email: "", password: "" });
+  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -30,10 +31,12 @@ const Register = (props) => {
 
   return (
     <div>
-      <div style={{ paddingTop: "2rem" }}>
+    <h4 className="col-sm-6" style={{marginTop:"2rem"}} >Registration Page</h4>
+      <div style={{ paddingTop: "0.8rem" }}>
         <Container>
           <form>
             <Row className="col-sm-6" style={{ margin: "0.2rem" }}>
+            Already User? Then Login...
               <input
                 type="text"
                 placeholder="Enter Email"
@@ -54,6 +57,14 @@ const Register = (props) => {
                 Register
               </Button>
             </Row>
+            <Link to='/login' style={{textDecoration:"none"}}>
+            <Row  className="col-sm-6" style={{ margin: "0.3rem" }}>
+              <Button variant="dark">
+                Login
+              </Button>
+            </Row>
+            </Link>
+            
             {Object.keys(regToken).length < 1 && typeof regToken === "object"   && (
               <Row className="mt-1 justify-content-md-left" xs mt="3" lg="3">
                 <font color="red">registration unsuccessfull...</font> 
@@ -71,7 +82,7 @@ const Register = (props) => {
         </Container>
       </div>
 
-      <div style={{ paddingTop: "3rem" }}>
+      {/* <div style={{ paddingTop: "3rem" }}>
         <Container>
           <form>
             <Row className="col-sm-6" style={{ margin: "0.2rem" }}>
@@ -114,19 +125,19 @@ const Register = (props) => {
 
           </form>
         </Container>
-      </div>
+      </div> */}
     </div>
   );
 };
 
 const mapStateToProps = (state) => ({
   regUser: state.registration,
-  loginUserss: state.loginData,
+  // loginUserss: state.loginData,
 });
 
 const mapDispatchToProps = {
   registerUsers,
-  loginUser,
+  // loginUser,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Register);

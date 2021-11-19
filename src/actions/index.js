@@ -35,7 +35,8 @@ export const deleteItem = (id) => {
 
 export const viewItem = (user) => {
    return {
-       type:"VIEW",payload:user
+       type:"VIEW",
+       payload:user
    }
 }
 
@@ -75,11 +76,19 @@ export const registerUsers = (data) => {
 export const loginUser = (data) => {
     console.log('All login users...',data.login);
     return async function(dispatch){
+        try{
         const response = await axios.post(`https://reqres.in/api/login`,data.login);
         console.log('login users...',response);
         return dispatch({
             type: "LOGIN",
             payload: response
         })
+    }
+    catch(err){
+        return dispatch({
+            type: "LOGIN",
+            payload: {}
+        })
+    }
     }
 }

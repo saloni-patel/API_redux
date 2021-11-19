@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { createItem, deleteItem, updateItem, createSingleItem, viewItem } from "../actions";
+import { createItem, deleteItem, updateItem, viewItem } from "../actions";
+// import { createItem, deleteItem, updateItem, createSingleItem, viewItem } from "../actions";
 // import { useSelector, useDispatch } from "react-redux";
 import { Button, Card, Modal} from "react-bootstrap";
 import { connect } from "react-redux";
-
+import { Link } from "react-router-dom";
 const Display = (props) => {
+
   const [updateUsers, setupdateUsers] = useState({}); 
   const [showData, setshowData] = useState(false);
-  
-  
+
   const data = props.data;
 
   const updateItems = (users) => {
@@ -22,8 +23,8 @@ const Display = (props) => {
     return data.map((users, id) => {
         
       return (
-          <>
-        <Card style={{ width: "10rem" }} key={id}>
+          <div key={id}>
+        <Card style={{ width: "10rem" }}>
           <Card.Img variant="top" src={users.avatar} />
           <Card.Body>
             <Card.Title>
@@ -38,13 +39,13 @@ const Display = (props) => {
               variant="secondary" style={{margin : "0.8rem"}} onClick={() => props.deleteItem(users.id)}>
               Delete
             </Button>
-            <Button
-              variant="secondary" onClick={() => props.viewItem(users)}>
-              View User
-            </Button>
+            <Link to="view">
+            <Button variant="secondary" onClick={() => props.viewItem(users)}>View User</Button>
+            </Link>
+            {/* <Button variant="secondary" onClick={() => props.viewItem(users)}>View User</Button> */}
           </Card.Body>
         </Card>
-        </>
+        </div>
       );
     });
   };
@@ -53,8 +54,8 @@ const Display = (props) => {
     <>
     <div>
       <div>
-      <Button variant="secondary" onClick={props.createItem} style={{margin:'1rem'}}>All Users</Button>&nbsp;
-      <Button variant="secondary" onClick={props.createSingleItem}>Single User</Button>
+      <Button variant="dark" onClick={props.createItem} style={{margin:'1rem'}}>All Users</Button>&nbsp;
+      {/* <Button variant="dark" onClick={props.createSingleItem}>Single User</Button> */}
         <div><h4>Hello ReqRes users!</h4></div>
       </div>
       
@@ -94,13 +95,14 @@ const Display = (props) => {
 const mapStateToProps = (state) => {
   return {
     data: state.displayReducer,
+    singleUser : state.singleDisplay
     //reducer
   };
 };
 
 const mapDispatchToProps = {
   createItem,
-  createSingleItem,
+  // createSingleItem,
   deleteItem,
   updateItem,
   viewItem
